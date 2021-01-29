@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="http to curl">
+    <meta name="author" content="https://github.com/cedric05">
+    <meta name="keywords" content="http, curl, requests, https" />
+    <title>Get curlify</title>
+    <style>
+        .center {
+            margin: auto;
+            width: 60%;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body class="text-center">
+
+    <div class="center">
+        <h1>curl request is here</h1>
+        <main role="main" class="inner cover">
+            <div id="curl-container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.21.3/min/vs/loader.js" crossorigin="anonymous"></script>
+
+    <script>
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.21.3/min/vs' } });
+
+        require(['vs/editor/editor.main'], function () {
+            var editor = monaco.editor.create(document.getElementById('curl-container'), {
+                value: `CURLSTATEMENT`,
+                language: 'shell'
+            });
+        });
+    </script>
+    <footer class='center'>
+        <p> powered by <a href="https://endeavour.today">endeavour.today</a> </p>
+
+    </footer>
+</body>
+
+</html>
