@@ -13,7 +13,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const bodymethods = ['POST', 'PUT']
     if (req.body) {
         comment = `# if you modifying, request payload make sure to drop content-length 
-    # or update to correct value`
+# or update to correct value`
         if (bodymethods.indexOf(req.method) === -1)
             comment = comment + `\n# as per spec, its adviced to have body for ${bodymethods} requests`
     }
