@@ -19,11 +19,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
     if (req.headers) {
         Object.keys(req.headers).forEach(key => {
-            headers += `-H "${key}: ${req.headers[key]}" ${slash}\n`
+            headers += `    -H "${key}: ${req.headers[key]}" ${slash}\n`
         });
-        if (headers !== '') {
-            headers += headers.substring(0, headers.length);
-        }
+    }
+    if (headers !== '') {
+        headers = headers.substring(0, headers.length);
     }
     if (req.body) {
         if (req.rawBody.indexOf('"') == -1) {
@@ -35,12 +35,12 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         }
         var body = `curl "${req.url}" ${slash}
     -X ${req.method} ${slash}
-    ${headers}    ${data} ${slash}
+${headers}    ${data} ${slash}
 ${comment}`
     } else {
         var body = `curl "${req.url}" ${slash}
     -X ${req.method} ${slash}
-    ${headers}    ${comment}`
+${headers}    ${comment}`
     }
 
     context.log("body is " + body);
