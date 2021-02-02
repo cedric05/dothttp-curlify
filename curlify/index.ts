@@ -19,10 +19,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
     if (req.headers) {
         Object.keys(req.headers).forEach(key => {
-            headers = `-H "${key}: ${req.headers[key]}" ${slash}\n`
+            headers += `-H "${key}: ${req.headers[key]}" ${slash}\n`
         });
         if (headers !== '') {
-            headers = headers.substring(0, headers.length);
+            headers += headers.substring(0, headers.length);
         }
     }
     if (req.body) {
@@ -42,6 +42,8 @@ ${comment}`
     -X ${req.method} ${slash}
     ${headers}    ${comment}`
     }
+
+    context.log("body is " + body);
 
     context.res.headers = { 'authoredby': 'https://github.com/cedric05', };
     if (isHtmlResponse) {
