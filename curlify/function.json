@@ -9,7 +9,12 @@
       "route": "{*route}",
       "methods": [
         "get",
-        "post"
+        "post",
+        "delete",
+        "put",
+        "patch",
+        "head",
+        "options"
       ]
     },
     {
