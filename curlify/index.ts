@@ -43,6 +43,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     if (headers !== '') {
         headers = headers.substring(0, headers.length);
     }
+    ifHostNameModifyHostname(req);
     if (req.body) {
         if (req.rawBody.indexOf('"') == -1) {
             data = `--data "${req.rawBody}"`
@@ -75,3 +76,13 @@ ${headers}    ${comment}`
 };
 
 export default httpTrigger;
+
+function ifHostNameModifyHostname(req: HttpRequest) {
+    var hostname = "req.dothttp.dev";
+    Object.keys(req.query)
+        .filter(querykey => querykey.toLowerCase() === 'host')
+        .forEach(querykey => { hostname = req.query[querykey]; });
+    const urlDO = new URL(req.url);
+    urlDO.hostname = hostname;
+    req.url = urlDO.toString();
+}
