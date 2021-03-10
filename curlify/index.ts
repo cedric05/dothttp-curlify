@@ -3,6 +3,7 @@ import fs = require('fs');
 
 
 const extraHeaders = [
+    "host", // this header confuses proxy server
     "max-forwards",
     "was-default-hostname",
     "disguised-host",
