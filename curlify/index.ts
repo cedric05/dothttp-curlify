@@ -2,6 +2,22 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import fs = require('fs');
 
 
+const extraHeaders = [
+    "max-forwards",
+    "was-default-hostname",
+    "disguised-host",
+    "x-waws-unencoded-url",
+    "x-arr-log-id",
+    "x-site-deployment-id",
+    "x-original-url",
+    "x-forwarded-for",
+    "x-arr-ssl",
+    "x-forwarded-proto",
+    "x-appservice-proto",
+    "x-forwarded-tlsversion",
+]
+
+
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     var slash = '\\';
     const double = '\\\\'
@@ -18,9 +34,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
             comment = comment + `\n# as per spec, its adviced to have body for ${bodymethods} requests`
     }
     if (req.headers) {
-        Object.keys(req.headers).forEach(key => {
-            headers += `    -H "${key}: ${req.headers[key]}" ${slash}\n`
-        });
+        Object.keys(req.headers)
+            .filter(key => !extraHeaders.includes(key))
+            .forEach(key => {
+                headers += `    -H "${key}: ${req.headers[key]}" ${slash}\n`
+            });
     }
     if (headers !== '') {
         headers = headers.substring(0, headers.length);
