@@ -67,12 +67,15 @@ ${headers}    ${comment}`
 
     context.res.headers = { 'authoredby': 'https://github.com/cedric05', };
     if (isHtmlResponse) {
-        context.res.headers = { 'content-type': 'text/html' }
+        context.res.headers['content-type'] = 'text/html'
         const data = fs.readFileSync('./template.html');
         body = data.toString().replace('CURLSTATEMENT', body);
     } else {
-        context.res.headers = { 'content-type': 'text/plain' }
+        context.res.headers['content-type'] = 'text/plain'
     }
+    context.res.headers['Access-Control-Allow-Origin'] = '*'
+    context.res.headers['Access-Control-Allow-Headers'] = '*'
+    context.res.headers['Access-Control-Allow-Methods'] = '*'
     context.res.body = body;
 };
 
