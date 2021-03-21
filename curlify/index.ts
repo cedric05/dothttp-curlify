@@ -21,7 +21,6 @@ const extraHeaders = [
 
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    context.log("this is request, ", JSON.stringify(req))
 
     var slash = '\\';
     const double = '\\\\'
@@ -66,7 +65,6 @@ ${comment}`
 ${headers}    ${comment}`
     }
 
-    context.log("body is " + body);
 
     context.res.headers = { 'authoredby': 'https://github.com/cedric05', };
     if (isHtmlResponse) {
