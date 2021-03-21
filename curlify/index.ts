@@ -21,6 +21,8 @@ const extraHeaders = [
 
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+    context.log("this is request, ", JSON.stringify(req))
+
     var slash = '\\';
     const double = '\\\\'
     const isHtmlResponse = (req.headers['accept'] ?? '').includes('text/html');
@@ -86,7 +88,7 @@ export default httpTrigger;
 
 function ifHostNameModifyHostname(req: HttpRequest) {
     const parsed = url.parse(req.url);
-    if (parsed.path.startsWith('/http://') || parsed.path.startsWith('/https://')) {
-        req.url = parsed.path.substr(1,)
+    if (parsed.path.startsWith('/http:/') || parsed.path.startsWith('/https:/')) {
+        req.url = new URL(parsed.path.substr(1,)).toString();
     }
 }
