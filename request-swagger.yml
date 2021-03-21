@@ -1,8 +1,6 @@
 openapi: 3.0.0
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/e3273/dothttp/1.0.0
+  - description: dothttp curlify/mirror collection apis
 info:
   description: This is a simple API
   version: "1.0.0"
@@ -136,7 +134,26 @@ paths:
           required: true
           schema:
             type: string
-      description: regenerates api key
+        - in: query
+          name: from
+          description: from count
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: to
+          description: to count
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: name
+          description: filter by name
+          schema:
+            type: string
+      description: list requests for a specific collection
       responses:
         '200':
           description: invalidates earlier api_key and create new 
@@ -166,7 +183,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Request'
     post:
       parameters:
         - in: path
@@ -227,6 +244,8 @@ components:
           id:
             type: string
             format: uuid
+          name:
+            type: string
           collectionid:
             type: string
             format: uuid
