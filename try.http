@@ -1,0 +1,13 @@
+POST 'https://req.dothttp.dev/https://httpbin.org/post'
+json({
+    "testing": "test2"
+})
+
+
+
+
+
+POST 'http://localhost:7071/https://httpbin.org/post'
+json({
+    "testing": "test2"
+})

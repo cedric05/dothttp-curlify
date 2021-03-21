@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import fs = require('fs');
+import url = require('url')
 
 
 const extraHeaders = [
@@ -77,16 +78,15 @@ ${headers}    ${comment}`
     context.res.headers['Access-Control-Allow-Headers'] = '*'
     context.res.headers['Access-Control-Allow-Methods'] = '*'
     context.res.body = body;
+    // context.res.headers['Location'] = req.url;
+    // context.res.status = 307;
 };
 
 export default httpTrigger;
 
 function ifHostNameModifyHostname(req: HttpRequest) {
-    var hostname = "req.dothttp.dev";
-    Object.keys(req.query)
-        .filter(querykey => querykey.toLowerCase() === 'host')
-        .forEach(querykey => { hostname = req.query[querykey]; });
-    const urlDO = new URL(req.url);
-    urlDO.hostname = hostname;
-    req.url = urlDO.toString();
+    const parsed = url.parse(req.url);
+    if (parsed.path.startsWith('/http://') || parsed.path.startsWith('/https://')) {
+        req.url = parsed.path.substr(1,)
+    }
 }
