@@ -4,13 +4,6 @@ With the rise in microservices, its hard to track outgoing request, its headers,
 
 
 ```http
-// saves request to access-token's user
-@name('request')
-POST https://req.dothttp.dev/{{access-token}}/https://httpbin.org/post
-json({
-    "ram": "ranga"
-
-})
 /* response
 @name('response')
 POST https://httpbin.org/post

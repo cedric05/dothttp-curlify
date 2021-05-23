@@ -24,7 +24,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     var slash = '\\';
     const double = '\\\\'
-    const isHtmlResponse = (req.headers['accept'] ?? '').includes('text/html');
+    const isHtmlResponse = (req.headers['accept'] ?? '').includes('text/html') && false;
     if (isHtmlResponse) slash = double;
     var comment = '';
     var headers = '';
@@ -55,13 +55,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         } else {
             data = `--data '''${req.rawBody}'''`
         }
-        var body = `curl "${req.url}" ${slash}
-    -X ${req.method} ${slash}
+        var body = `curl -X ${req.method} "${req.url}" ${slash}
 ${headers}    ${data} ${slash}
 ${comment}`
     } else {
-        var body = `curl "${req.url}" ${slash}
-    -X ${req.method} ${slash}
+        var body = `curl -X ${req.method} "${req.url}" ${slash}
 ${headers}    ${comment}`
     }
 
